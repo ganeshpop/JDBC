@@ -1,10 +1,10 @@
-package com.example.jdbc;
+package com.example.jdbc.set1;
 
 import java.sql.*;
 import java.util.Scanner;
 
-// Display all the assignment, subject, points submitted by a student and order by subject name and assignment category
-public class Question4 {
+// Display top 3 students  name who has maximum marks in given subject and category
+public class Question6 {
     public static void main(String[] args) {
         final String driver = "com.mysql.cj.jdbc.Driver";
         final String connectionString = "jdbc:mysql://localhost:3306/test";
@@ -13,16 +13,17 @@ public class Question4 {
         Scanner scanner = new Scanner(System.in);
 
         try {
-            String studentName = scanner.nextLine();
+            String subject = scanner.nextLine();
+            String assignmentCategory = scanner.nextLine();
             Class.forName(driver);
             Connection connection = DriverManager.getConnection(connectionString, userName, password);
-            PreparedStatement getAssignments = connection.prepareStatement("SELECT SUBJECT, ASSIGNMENT_CATEGORY, POINTS FROM assignments WHERE STUDENT_NAME = ? ORDER BY SUBJECT, ASSIGNMENT_CATEGORY;");
-            getAssignments.setString(1, studentName);
+            PreparedStatement getAssignments = connection.prepareStatement("SELECT STUDENT_NAME, POINTS FROM assignments WHERE SUBJECT = ? AND ASSIGNMENT_CATEGORY = ? ORDER BY POINTS DESC LIMIT 3;");
+            getAssignments.setString(1, subject);
+            getAssignments.setString(2, assignmentCategory);
             ResultSet resultSet = getAssignments.executeQuery();
             while (resultSet.next()) {
                 System.out.println(
-                        resultSet.getString("SUBJECT") + " "
-                                + resultSet.getString("ASSIGNMENT_CATEGORY") + " "
+                                  resultSet.getString("STUDENT_NAME") + " "
                                 + resultSet.getInt("POINTS")
                 );
             }

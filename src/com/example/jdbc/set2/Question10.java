@@ -1,27 +1,29 @@
-package com.example.jdbc;
+package com.example.jdbc.set2;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Scanner;
 
-// Update student name of a given student and display effected rows count
-public class Question8 {
+// Delete product record with a given name where the price is below given threshold
+public class Question10 {
     public static void main(String[] args) {
         final String driver = "com.mysql.cj.jdbc.Driver";
-        final String connectionString = "jdbc:mysql://localhost:3306/test";
+        final String connectionString = "jdbc:mysql://localhost:3306/catalog";
         final String userName = "ganesh";
         final String password = "password";
         Scanner scanner = new Scanner(System.in);
-
         try {
-            String studentName = scanner.nextLine();
-            String updatedStudentName = scanner.nextLine();
+            String productName = scanner.nextLine();
+            double value = scanner.nextInt();
             Class.forName(driver);
             Connection connection = DriverManager.getConnection(connectionString, userName, password);
             connection.setAutoCommit(false);
-            PreparedStatement updateStudentName = connection.prepareStatement("UPDATE assignments SET STUDENT_NAME = ? WHERE SERIAL_NO IN (SELECT SERIAL_NO WHERE STUDENT_NAME = ?);");
-            updateStudentName.setString(1, updatedStudentName.toUpperCase());
-            updateStudentName.setString(2, studentName);
-            int effectedRows = updateStudentName.executeUpdate();
+            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM products WHERE name = ? AND products.price < ?;");
+            deleteStatement.setString(1, productName);
+            deleteStatement.setDouble(2, value);
+            int effectedRows = deleteStatement.executeUpdate();
             if (effectedRows > 0) {
                 connection.commit();
                 System.out.println(effectedRows);
@@ -30,6 +32,5 @@ public class Question8 {
         } catch (NumberFormatException | SQLException | ClassNotFoundException exception) {
             exception.printStackTrace();
         }
-
     }
 }
