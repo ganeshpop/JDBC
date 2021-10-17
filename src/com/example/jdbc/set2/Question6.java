@@ -13,7 +13,7 @@ public class Question6 {
         try {
             Class.forName(driver);
             Connection connection = DriverManager.getConnection(connectionString, userName, password);
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id , a.name, code, description, price FROM products a, (SELECT name, max(price) AS maxprice FROM products GROUP BY  name) b WHERE a.name = b.name and price = maxprice;");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id , a.name, code, description, price FROM products a, (SELECT name, max(price) AS maxprice FROM products GROUP BY  name) b WHERE a.name = b.name AND price = maxprice;");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 System.out.println(

@@ -14,13 +14,14 @@ public class Question9 {
         final String userName = "ganesh";
         final String password = "password";
         Scanner scanner = new Scanner(System.in);
+
         try {
             String productName = scanner.nextLine();
             String value = "%" + scanner.nextLine() + "%"; //% is for Regular Expression
             Class.forName(driver);
             Connection connection = DriverManager.getConnection(connectionString, userName, password);
             connection.setAutoCommit(false);
-            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM products WHERE name = ? AND products.description LIKE ?;");
+            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM products WHERE name = ? AND description LIKE ?;");
             deleteStatement.setString(1, productName);
             deleteStatement.setString(2, value);
             int effectedRows = deleteStatement.executeUpdate();

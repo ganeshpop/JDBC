@@ -14,13 +14,14 @@ public class Question10 {
         final String userName = "ganesh";
         final String password = "password";
         Scanner scanner = new Scanner(System.in);
+
         try {
             String productName = scanner.nextLine();
-            double value = scanner.nextInt();
+            double value = scanner.nextDouble();
             Class.forName(driver);
             Connection connection = DriverManager.getConnection(connectionString, userName, password);
             connection.setAutoCommit(false);
-            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM products WHERE name = ? AND products.price < ?;");
+            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM products WHERE name = ? AND price < ?;");
             deleteStatement.setString(1, productName);
             deleteStatement.setDouble(2, value);
             int effectedRows = deleteStatement.executeUpdate();
