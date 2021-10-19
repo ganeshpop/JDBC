@@ -1,4 +1,4 @@
-package com.example.jdbc.set3;
+package com.example.jdbc.set4;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,25 +6,25 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-// Delete rating record of a given movie name where the rating is below given threshold
-public class Question10 {
+// Update name of a given employee and display effected rows count
+public class Question8 {
     public static void main(String[] args) {
         final String driver = "com.mysql.cj.jdbc.Driver";
-        final String connectionString = "jdbc:mysql://localhost:3306/rating";
+        final String connectionString = "jdbc:mysql://localhost:3306/test";
         final String userName = "ganesh";
         final String password = "password";
         Scanner scanner = new Scanner(System.in);
 
         try {
-            String movieName = scanner.nextLine();
-            double value = scanner.nextDouble();
+            String employeeName = scanner.nextLine();
+            String updatedEmployeeName = scanner.nextLine();
             Class.forName(driver);
             Connection connection = DriverManager.getConnection(connectionString, userName, password);
             connection.setAutoCommit(false);
-            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM ratings WHERE movie_id = (SELECT id FROM movies WHERE movies.name = ?) AND ratings.rating < ?;");
-            deleteStatement.setString(1, movieName);
-            deleteStatement.setDouble(2, value);
-            int effectedRows = deleteStatement.executeUpdate();
+            PreparedStatement updateStudentName = connection.prepareStatement("UPDATE employees SET EMPLOYEE_NAME = ? WHERE EMPLOYEE_ID IN (SELECT EMPLOYEE_ID WHERE EMPLOYEE_NAME = ?);");
+            updateStudentName.setString(1, updatedEmployeeName.toUpperCase());
+            updateStudentName.setString(2, employeeName);
+            int effectedRows = updateStudentName.executeUpdate();
             if (effectedRows > 0) {
                 connection.commit();
                 System.out.println(effectedRows);
@@ -33,5 +33,6 @@ public class Question10 {
         } catch (NumberFormatException | SQLException | ClassNotFoundException exception) {
             exception.printStackTrace();
         }
+
     }
 }

@@ -14,6 +14,7 @@ public class Question9 {
         final String userName = "ganesh";
         final String password = "password";
         Scanner scanner = new Scanner(System.in);
+
         try {
             String movieName = scanner.nextLine();
             Class.forName(driver);

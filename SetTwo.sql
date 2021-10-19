@@ -3,7 +3,7 @@ USE catalog;
 
 DROP TABLE products;
 
-CREATE TABLE products
+CREATE TABLE phones
 (
     id          BIGINT AUTO_INCREMENT,
     code        VARCHAR(10),

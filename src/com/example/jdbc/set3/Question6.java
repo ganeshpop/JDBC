@@ -13,7 +13,7 @@ public class Question6 {
         try {
             Class.forName(driver);
             Connection connection = DriverManager.getConnection(connectionString, userName, password);
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, r.name AS user, m.name AS movie, r.rating FROM movies m, (SELECT name, movie_id , max(rating) as rating FROM ratings GROUP BY  movie_id ORDER BY  movie_id) r WHERE m.id = r.movie_id ORDER BY m.name;");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, r.name AS user, m.name AS movie, r.rating FROM movies m, (SELECT name, movie_id , max(rating) as rating FROM ratings GROUP BY  movie_id ORDER BY  movie_id) r WHERE m.id = r.movie_id ORDER BY id;");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 System.out.println(
